@@ -1,7 +1,6 @@
 package com.example.wheretoeat.Network
 
-import com.example.wheretoeat.Database.Entities.ResponseDataClass
-import com.example.wheretoeat.Database.Entities.RestaurantData
+import com.example.wheretoeat.Database.Entities.RespData
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.http.GET
@@ -19,7 +18,7 @@ interface Api {
     fun getCities(): Call<JSONArray>
 
     @GET("restaurants")
-    fun getRestaurants(@Query("state")state:String): Call<List<RestaurantData>>
+    fun getRestaurants(@Query("state")state:String): Call<RespData>
 
     companion object {
         const val BASE_URL = "https://opentable.herokuapp.com/api/"

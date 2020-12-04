@@ -1,39 +1,57 @@
 package com.example.wheretoeat.Database.ViewModels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.example.wheretoeat.Database.Entities.ResponseDataClass
-import com.example.wheretoeat.Database.Entities.RestaurantDataClass
-import com.example.wheretoeat.Network.RestaurantApiInterface
-import kotlinx.coroutines.launch
+import androidx.lifecycle.ViewModel
+import com.example.wheretoeat.Database.Entities.RespData
+import com.example.wheretoeat.Database.Entities.RestaurantData
+import com.example.wheretoeat.Network.Api
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
-class RestaurantViewModel(application: Application) : AndroidViewModel(application) {
-    var allRestaurant: MutableLiveData<List<RestaurantDataClass>>? = null
+class RestaurantViewModel : ViewModel() {
 
-    fun getRestaurants(): MutableLiveData<List<RestaurantDataClass>>? {
-        if ( allRestaurant == null)
-        {
-            allRestaurant = MutableLiveData<List<RestaurantDataClass>>()
-            loadRestaurant()
+    private var restList: MutableLiveData<List<RestaurantData>>? = null
+
+    val getRestaurants: MutableLiveData<List<RestaurantData>>
+        get() {
+            if (restList == null) {
+                restList = MutableLiveData<List<RestaurantData>>()
+                loadRestaurant()
+            }
+            return restList as MutableLiveData<List<RestaurantData>>
         }
-        return allRestaurant
-    }
+
     private fun loadRestaurant() {
-        RestaurantApiInterface.endpoints.getRestaurants("IL").enqueue(object : Callback<ResponseDataClass> {
-            override fun onFailure(call: Call<ResponseDataClass>, t: Throwable) {
-            }
-            override fun onResponse(call: Call<ResponseDataClass>, response: Response<ResponseDataClass>) {
-                 if (response.isSuccessful) {
-                     allRestaurant = response.body()!!.restaurants
-                 }
+        val retrofit = Retrofit.Builder()
+                .baseUrl(Api.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        val api = retrofit.create(Api::class.java)
+//        val call: Call<List<RestaurantData>> = api.getRestaurants("IL")
+        api.getRestaurants("IL").enqueue(object : Callback<RespData> {
+            override fun onResponse(call: Call<RespData>, response: Response<RespData>) {
+
+                Log.d("resp", response.body().toString())
+                restList!!.setValue(response.body()!!.restaurants)
             }
 
+            override fun onFailure(call: Call<RespData>, t: Throwable) {}
         })
+
+//        call.enqueue(object : Callback<List<RestaurantData>> {
+//            override fun onResponse(call: Call<List<RestaurantData>>, response: Response<List<RestaurantData>>) {
+//
+//                Log.d("kiiras", response.body().toString())
+//                restList!!.setValue(response.body())
+//            }
+//
+//            override fun onFailure(call: Call<List<RestaurantData>>, t: Throwable) {}
+//        })
     }
 }
