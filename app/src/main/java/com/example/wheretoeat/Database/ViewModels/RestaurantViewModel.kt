@@ -1,12 +1,12 @@
 package com.example.wheretoeat.Database.ViewModels
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.wheretoeat.Database.Entities.RespData
 import com.example.wheretoeat.Database.Entities.RestaurantData
 import com.example.wheretoeat.Network.Api
+import com.example.wheretoeat.SplashActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,25 +33,16 @@ class RestaurantViewModel : ViewModel() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         val api = retrofit.create(Api::class.java)
-//        val call: Call<List<RestaurantData>> = api.getRestaurants("IL")
-        api.getRestaurants("IL").enqueue(object : Callback<RespData> {
+        api.getRestaurants("US",SplashActivity.num_current_page).enqueue(object : Callback<RespData> {
             override fun onResponse(call: Call<RespData>, response: Response<RespData>) {
-
-                Log.d("resp", response.body().toString())
-                restList!!.setValue(response.body()!!.restaurants)
+                if(response.isSuccessful)
+                {
+                    Log.d("resp", response.body().toString())
+                    restList!!.value = response.body()!!.restaurants
+                }
             }
-
             override fun onFailure(call: Call<RespData>, t: Throwable) {}
         })
-
-//        call.enqueue(object : Callback<List<RestaurantData>> {
-//            override fun onResponse(call: Call<List<RestaurantData>>, response: Response<List<RestaurantData>>) {
-//
-//                Log.d("kiiras", response.body().toString())
-//                restList!!.setValue(response.body())
-//            }
-//
-//            override fun onFailure(call: Call<List<RestaurantData>>, t: Throwable) {}
-//        })
+        SplashActivity.num_current_page++
     }
 }
