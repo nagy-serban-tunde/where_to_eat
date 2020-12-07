@@ -1,20 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.MainScreenFragment"
-    android:id="@+id/scroll_view">
+    tools:context=".Fragments.MainScreenFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
+        android:id="@+id/LinearLayout"
         android:layout_width="match_parent"
-        android:id="@+id/restaurantRecycler"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/RelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp">
+            <TextView
+                android:id="@+id/textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/label_research_country"
+                android:textSize="15dp"
+                android:gravity="center"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp">
+            <Spinner
+                android:id="@+id/SpinnerCountries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="18dp"
+                android:drawableStart="@drawable/research"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/RelativeLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp">
 
-</androidx.core.widget.NestedScrollView>
+            <TextView
+                android:id="@+id/textview1"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/label_selected_country"
+                android:textSize="15dp" />
+            <TextView
+                android:id="@+id/textviewCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text=""
+                android:padding="4dp"
+                android:layout_toRightOf="@id/textview1"
+                android:textSize="15dp"
+                android:gravity="center"
+                />
+        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/restaurantRecycler"
+            android:layout_height="match_parent"
+            android:layout_below="@id/SpinnerCountries"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,6 +1,7 @@
 package com.example.wheretoeat.Adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,6 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wheretoeat.Database.Entities.RestaurantData
-import com.example.wheretoeat.SplashActivity
 
 class RestaurantAdapter(context: Context?,
                         private val listener:OnItemClickListener) : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
@@ -59,28 +59,10 @@ class RestaurantAdapter(context: Context?,
 
         }
     }
-    fun setData(restaList: List<RestaurantData>)
+    fun setData(l: List<RestaurantData>)
     {
-        var l = SplashActivity.restaurantDataMemory.get("res")
-        if (l == null)
-        {
-            SplashActivity.restaurantDataMemory.put("res", restaList)
-            this.restaurantList=restaList
-        }
-        else
-        {
-            l = l + restaList
-            SplashActivity.restaurantDataMemory.put("res", l)
-            this.restaurantList = l
-        }
-        notifyDataSetChanged()
-    }
-    fun setFirstData()
-    {
-        var l = SplashActivity.restaurantDataMemory.get("res")
         if (l != null) {
             this.restaurantList = l
         }
     }
-
 }

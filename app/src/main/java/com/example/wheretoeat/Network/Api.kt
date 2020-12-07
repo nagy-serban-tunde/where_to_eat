@@ -1,6 +1,7 @@
 package com.example.wheretoeat.Network
 
 import com.example.wheretoeat.Database.Entities.RespData
+import com.example.wheretoeat.Database.Entities.RespDataCountries
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.http.GET
@@ -12,7 +13,7 @@ interface Api {
     fun getStats(): Call<JSONArray>
 
     @GET("countries")
-    fun getCountries(): Call<JSONArray>
+    fun getCountries(): Call<RespDataCountries>
 
     @GET("cities")
     fun getCities(): Call<JSONArray>
