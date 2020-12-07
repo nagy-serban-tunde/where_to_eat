@@ -1,6 +1,8 @@
 package com.example.wheretoeat.Database.ViewModels
 
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.wheretoeat.Database.Entities.RespData
@@ -17,7 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RestaurantViewModel : ViewModel() {
 
     private var restList: MutableLiveData<List<RestaurantData>>? = null
-
     val getRestaurants: MutableLiveData<List<RestaurantData>>
         get() {
             if (restList == null) {
@@ -28,6 +29,8 @@ class RestaurantViewModel : ViewModel() {
         }
 
     private fun loadRestaurant() {
+        var n = SplashActivity.num_current_page
+        Log.i("resp","Current_page: $n")
         val retrofit = Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -35,10 +38,11 @@ class RestaurantViewModel : ViewModel() {
         val api = retrofit.create(Api::class.java)
         api.getRestaurants("US",SplashActivity.num_current_page).enqueue(object : Callback<RespData> {
             override fun onResponse(call: Call<RespData>, response: Response<RespData>) {
-                if(response.isSuccessful)
+                if(response.isSuccessful &&  response.body() != null)
                 {
                     Log.d("resp", response.body().toString())
                     restList!!.value = response.body()!!.restaurants
+
                 }
             }
             override fun onFailure(call: Call<RespData>, t: Throwable) {}

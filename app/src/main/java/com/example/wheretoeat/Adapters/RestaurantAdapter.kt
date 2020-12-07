@@ -1,18 +1,21 @@
 package com.example.wheretoeat.Adapters
 
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.wheretoeat.Database.Entities.RestaurantData
 import com.example.wheretoeat.SplashActivity
 
-class RestaurantAdapter() : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
+class RestaurantAdapter(context: Context?,
+                        private val listener:OnItemClickListener) : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
     var restaurantList: List<RestaurantData> = emptyList()
-
+    var cont : Context? = context
     @NonNull
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowItem: View = LayoutInflater.from(parent.context).inflate(
@@ -25,20 +28,34 @@ class RestaurantAdapter() : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = restaurantList[position]
-        holder.textView.text = currentItem.name
+        holder.textViewName.text = currentItem.name
+        holder.textViewPhone.text = currentItem.phone
+        cont?.let { Glide.with(it).load(currentItem.image_url).into(holder.imageViewRestaurant) }
     }
 
     override fun getItemCount(): Int {
         return restaurantList.size
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
-        val textView: TextView
-
-        override fun onClick(view: View) {
-        }
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+        val textViewName: TextView = view.findViewById(com.example.wheretoeat.R.id.textViewRestaurantName)
+        val textViewPhone: TextView = view.findViewById(com.example.wheretoeat.R.id.textViewRestaurantPhone)
+        val imageViewRestaurant: ImageView = view.findViewById(com.example.wheretoeat.R.id.imageViewRestaurant)
         init {
-            textView = view.findViewById(com.example.wheretoeat.R.id.TextViewRestaurantName)
+            view.setOnClickListener(this)
+        }
+        override fun onClick(view: View) {
+            val position = adapterPosition
+            if(position != RecyclerView.NO_POSITION)
+            {
+                listener.onItemClick(position)
+            }
+
+        }
+    }
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+        {
 
         }
     }
@@ -47,15 +64,23 @@ class RestaurantAdapter() : RecyclerView.Adapter<RestaurantAdapter.ViewHolder>()
         var l = SplashActivity.restaurantDataMemory.get("res")
         if (l == null)
         {
-            SplashActivity.restaurantDataMemory.put("res",restaList)
+            SplashActivity.restaurantDataMemory.put("res", restaList)
             this.restaurantList=restaList
         }
         else
         {
             l = l + restaList
-            SplashActivity.restaurantDataMemory.put("res",l)
+            SplashActivity.restaurantDataMemory.put("res", l)
             this.restaurantList = l
         }
         notifyDataSetChanged()
     }
+    fun setFirstData()
+    {
+        var l = SplashActivity.restaurantDataMemory.get("res")
+        if (l != null) {
+            this.restaurantList = l
+        }
+    }
+
 }

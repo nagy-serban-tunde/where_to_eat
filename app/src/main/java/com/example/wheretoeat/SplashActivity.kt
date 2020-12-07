@@ -1,19 +1,15 @@
 package com.example.wheretoeat
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.wheretoeat.Adapters.RestaurantAdapter
 import com.example.wheretoeat.Database.Entities.RestaurantData
 import com.example.wheretoeat.Database.ViewModels.RestaurantViewModel
 
 
-open class SplashActivity : AppCompatActivity() {
+open class SplashActivity : AppCompatActivity(), RestaurantAdapter.OnItemClickListener {
 
     private lateinit var restaurantViewModel: RestaurantViewModel
     private val SPLASH_TIME_OUT:Long = 3000 // 1 sec
@@ -32,7 +28,7 @@ open class SplashActivity : AppCompatActivity() {
     {
         restaurantViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
         restaurantViewModel.getRestaurants.observe(this, {resList->
-            var adapter = RestaurantAdapter()
+            var adapter = RestaurantAdapter(this,this)
             adapter.setData(resList)
             startActivity(Intent(this, MainActivity::class.java))
         })

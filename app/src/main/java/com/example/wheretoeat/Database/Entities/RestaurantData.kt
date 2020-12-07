@@ -7,4 +7,4 @@ data class RespData(
         val restaurants: List<RestaurantData>
 )
 
-data class RestaurantData(val name: String,val imageurl: String, val lat: String, val lng: String, val city: String , val phonenumber: String)
+data class RestaurantData(val name: String,val image_url: String, val lat: String, val lng: String, val city: String , val phone: String)

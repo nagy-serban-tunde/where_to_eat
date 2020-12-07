@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_profileScreenFragment"
             app:destination="@id/profileScreenFragment" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_deatilFragmentMain"
+            app:destination="@id/deatilFragmentMain" />
     </fragment>
     <fragment
         android:id="@+id/profileScreenFragment"
@@ -21,6 +24,15 @@
         tools:layout="@layout/fragment_profile_screen" >
         <action
             android:id="@+id/action_profileScreenFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deatilFragmentMain"
+        android:name="com.example.wheretoeat.Fragments.DeatilFragmentMain"
+        android:label="Details"
+        tools:layout="@layout/fragment_deatil_main" >
+        <action
+            android:id="@+id/action_deatilFragmentMain_to_mainScreenFragment"
             app:destination="@id/mainScreenFragment" />
     </fragment>
 
