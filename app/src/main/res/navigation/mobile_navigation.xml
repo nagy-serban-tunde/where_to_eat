@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/mainScreenFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/mainScreenFragment"
@@ -16,6 +16,12 @@
         <action
             android:id="@+id/action_mainScreenFragment_to_deatilFragmentMain"
             app:destination="@id/deatilFragmentMain" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_addProfileFragment"
+            app:destination="@id/profileAddScreenFragment" />
+        <action
+            android:id="@+id/action_mainScreenFragment_to_profileScreenFragment2"
+            app:destination="@id/profileScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileScreenFragment"
@@ -34,6 +40,27 @@
         <action
             android:id="@+id/action_deatilFragmentMain_to_mainScreenFragment"
             app:destination="@id/mainScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.wheretoeat.Fragments.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileAddScreenFragment"
+        android:name="com.example.wheretoeat.Fragments.AddProfileFragment"
+        android:label="fragment_add_profile"
+        tools:layout="@layout/fragment_add_profile" >
+        <action
+            android:id="@+id/action_addProfileFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+        <action
+            android:id="@+id/action_addProfileFragment_to_profileScreenFragment"
+            app:destination="@id/profileScreenFragment" />
     </fragment>
 
 </navigation>

@@ -4,11 +4,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.wheretoeat.Database.Entities.CountriesData
-import com.example.wheretoeat.Database.Entities.RespData
 import com.example.wheretoeat.Database.Entities.RespDataCountries
-import com.example.wheretoeat.Database.Entities.RestaurantData
+import com.example.wheretoeat.Fragments.SplashFragment
 import com.example.wheretoeat.Network.Api
-import com.example.wheretoeat.SplashActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,7 +43,7 @@ class CountriesViewModel : ViewModel()
     }
     fun setData(countries: ArrayList<String>)
     {
-        SplashActivity.countriesDataMemory.put("countries", countries)
+        SplashFragment.countriesDataMemory.put("countries", countries)
 
     }
 }

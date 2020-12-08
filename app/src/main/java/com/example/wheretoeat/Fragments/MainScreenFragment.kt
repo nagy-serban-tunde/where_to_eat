@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wheretoeat.Adapters.RestaurantAdapter
+import com.example.wheretoeat.Database.Entities.RestaurantData
 import com.example.wheretoeat.Database.ViewModels.RestaurantViewModel
 import com.example.wheretoeat.R
-import com.example.wheretoeat.SplashActivity
 
 
 class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
@@ -26,7 +26,7 @@ class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
     private lateinit var recyclerViewRestaurant: RecyclerView
     private lateinit var restaurantViewModel: RestaurantViewModel
     var adapter : RestaurantAdapter= RestaurantAdapter(this.context, this)
-    var l = SplashActivity.restaurantDataMemory.get("res")
+    var l = SplashFragment.restaurantDataMemory.get("res")
 
     private lateinit var  spinner: Spinner
     private lateinit var textViewCountry : TextView
@@ -47,7 +47,7 @@ class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 //        recyclerView and adapter
         this.initRecyclerView(view.context)
 
-//        this.setRecyclerViewScrollListener(recyclerViewRestaurant.layoutManager as LinearLayoutManager)
+        this.setRecyclerViewScrollListener(recyclerViewRestaurant.layoutManager as LinearLayoutManager)
 
 //        spinner
         spinner = view.findViewById(R.id.SpinnerCountries)
@@ -60,56 +60,51 @@ class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
     private fun initRecyclerView(context: Context)
     {
-        Log.i("resp", "initbe vagyok")
         recyclerViewRestaurant.layoutManager = LinearLayoutManager(context)
-        restaurantViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
+        restaurantViewModel = ViewModelProvider(requireActivity()).get(RestaurantViewModel::class.java)
         adapter.cont=context
         recyclerViewRestaurant.adapter = adapter
-        l?.let { adapter.setData(it) }
-        textViewCountry.text = SplashActivity.coutryType    }
 
-    override fun onItemClick(position: Int)
+        restaurantViewModel.restList.value?.let { adapter.setData(it) }
+//        restaurantViewModel.loadRestaurant()
+        restaurantViewModel.restList.observe(viewLifecycleOwner, {
+            adapter.setData(it)
+        })
+        textViewCountry.text = SplashFragment.coutryType}
+
+    override fun onItemClick(data : RestaurantData)
     {
-        Toast.makeText(context, "Item $position", Toast.LENGTH_SHORT).show()
-        var name = l?.get(position)?.name
-        var phone = l?.get(position)?.phone
-        var city =l?.get(position)?.city
-        var img_url = l?.get(position)?.image_url
-        var state = l?.get(position)?.state
-        var area = l?.get(position)?.area
-
+        var name = data.name
+        var phone = data.phone
+        var city = data.city
+        var img_url = data.image_url
+        var state = data.state
+        var area = data.area
         val bundle = bundleOf("name" to name, "img_url" to img_url, "phone" to phone, "city" to city, "state" to state, "area" to area)
         findNavController().navigate(R.id.deatilFragmentMain, bundle)
     }
 
     private fun setRecyclerViewScrollListener(linearLayoutManager: LinearLayoutManager) {
-
         recyclerViewRestaurant.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                val visibleItemCount = linearLayoutManager.childCount
-                val totalItemCount = linearLayoutManager.itemCount
-                val firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition()
-                Log.i("resp", "firstVisibleItemPosition: $firstVisibleItemPosition")
-                Log.i("resp", "totalItemCount :$totalItemCount")
-                Log.i("resp", "visibleItemCount :$visibleItemCount")
-                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                    restaurantViewModel.getRestaurants.observe(viewLifecycleOwner, { })
+                if(recyclerView.canScrollVertically(1))
+                {
+                    restaurantViewModel.loadRestaurant()
                 }
-
             }
         })
     }
 
     private fun setSpinner(context: Context) {
-        var l = SplashActivity.countriesDataMemory.get("countries")
+        var l = SplashFragment.countriesDataMemory.get("countries")
         if (l != null) {
             var list : ArrayList<String> = ArrayList<String>()
             list.add("None")
             list.addAll(l)
             var adap: ArrayAdapter<String> = ArrayAdapter(context, android.R.layout.simple_spinner_item, list)
             spinner.adapter = adap
-            textViewCountry.text = SplashActivity.coutryType
+            textViewCountry.text = SplashFragment.coutryType
         }
     }
 
@@ -121,14 +116,14 @@ class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
                 if(textViewItem.text.toString() == "None") { }
                 else
                 {
-                    SplashActivity.restaurantDataMemory.remove("res")
-                    SplashActivity.coutryType = textViewItem.text.toString()
+                    SplashFragment.restaurantDataMemory.remove("res")
+                    SplashFragment.coutryType = textViewItem.text.toString()
 
-                    SplashActivity.num_current_page = 1
-                    restaurantViewModel.getRestaurants.observe(viewLifecycleOwner, { reslist -> })
-                    l?.get(0)?.name?.let { Log.i("resp", it) }
+                    SplashFragment.num_current_page = 1
+                    restaurantViewModel.loadNewRestaurant()
+
                     adapter.setData(l!!)
-                    textViewCountry.text = SplashActivity.coutryType
+                    textViewCountry.text = SplashFragment.coutryType
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {

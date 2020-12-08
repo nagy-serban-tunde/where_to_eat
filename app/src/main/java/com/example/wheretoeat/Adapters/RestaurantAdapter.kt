@@ -1,7 +1,6 @@
 package com.example.wheretoeat.Adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,24 +44,16 @@ class RestaurantAdapter(context: Context?,
             view.setOnClickListener(this)
         }
         override fun onClick(view: View) {
-            val position = adapterPosition
-            if(position != RecyclerView.NO_POSITION)
-            {
-                listener.onItemClick(position)
-            }
-
+            val data = restaurantList[adapterPosition]
+            listener.onItemClick(data)
         }
     }
     interface OnItemClickListener{
-        fun onItemClick(position: Int)
-        {
-
-        }
+        fun onItemClick(rest : RestaurantData)
     }
     fun setData(l: List<RestaurantData>)
     {
-        if (l != null) {
-            this.restaurantList = l
-        }
+        this.restaurantList = l
+        notifyDataSetChanged()
     }
 }
