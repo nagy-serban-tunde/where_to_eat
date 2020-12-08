@@ -56,7 +56,6 @@ class RestaurantViewModel : ViewModel() {
         var l = SplashActivity.restaurantDataMemory.get("res")
         if (l == null)
         {
-            Log.i("resp","ures lista")
             SplashActivity.restaurantDataMemory.put("res", restaList)
         }
         else

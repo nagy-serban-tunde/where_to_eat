@@ -28,9 +28,9 @@
     </fragment>
     <fragment
         android:id="@+id/deatilFragmentMain"
-        android:name="com.example.wheretoeat.Fragments.DeatilFragmentMain"
+        android:name="com.example.wheretoeat.Fragments.DetailMainFragment"
         android:label="Details"
-        tools:layout="@layout/fragment_deatil_main" >
+        tools:layout="@layout/fragment_detail_main" >
         <action
             android:id="@+id/action_deatilFragmentMain_to_mainScreenFragment"
             app:destination="@id/mainScreenFragment" />

@@ -2,5 +2,5 @@
     <string name="app_name">WhereToEat</string>
     <string name="app_title">Where to eat?</string>
     <string name="label_research_country">Select your country!</string>>
-    <string name="label_selected_country">Selected country:</string>>
+    <string name="label_selected_country">Selected country:</string>
 </resources>
