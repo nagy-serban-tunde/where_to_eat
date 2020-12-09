@@ -12,19 +12,24 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
-    val allProfile: LiveData<List<ProfileData>>
+    lateinit var allProfile: List<ProfileData>
 
     private val repository: ProfileRepository
+    var onLoadingFinished: () -> Unit = {}
 
     init{
         val profileDao = WhereToEatDatabaseDatabase.getDatabase(application).profileDao()
         repository = ProfileRepository(profileDao)
-        allProfile = repository.allProfile
+        viewModelScope.launch {
+            allProfile = repository.getProfile()
+            onLoadingFinished()
+        }
     }
 
     fun insert(profile: ProfileData) = viewModelScope.launch {
         repository.insert(profile)
     }
+
 
     fun deleteFood(profile: ProfileData)
     {

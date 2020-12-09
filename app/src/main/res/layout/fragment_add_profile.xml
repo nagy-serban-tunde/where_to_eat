@@ -39,7 +39,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="30dp">
                 <EditText
-                    android:id="@+id/EditTextRestaurantNameAdd"
+                    android:id="@+id/EditTextNameAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:fontFamily="sans-serif-medium"
-                    android:inputType="text"
+                    android:inputType="phone"
                     android:hint="@string/hint_add_phone"
                     android:textSize="20sp"
                     android:drawablePadding="18dp"
@@ -129,12 +129,12 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="30dp">
                 <EditText
-                    android:id="@+id/EditTextAdressEmail"
+                    android:id="@+id/EditTextAdressEmailAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:fontFamily="sans-serif-medium"
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:hint="@string/hint_add_email"
                     android:textSize="20sp"
                     android:drawablePadding="18dp"

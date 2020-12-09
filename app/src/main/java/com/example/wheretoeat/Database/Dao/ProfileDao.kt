@@ -8,7 +8,7 @@ import com.example.wheretoeat.Database.Entities.ProfileData
 interface ProfileDao {
 
     @Query("SELECT * FROM profile ORDER BY id ASC")
-    fun getProfile(): LiveData<List<ProfileData>>
+    suspend fun getProfile(): List<ProfileData>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(profile: ProfileData)
@@ -18,4 +18,5 @@ interface ProfileDao {
 
     @Query("DELETE FROM profile")
     suspend fun deleteAll()
+
 }

@@ -7,7 +7,13 @@
     <string name="hint_add_name">Add your name! </string>
     <string name="hint_add_phone">Add your phone! </string>
     <string name="hint_add_address">Add your address! </string>
-    <string name="hint_add_email">Add your email! </string>
+    <string name="hint_add_email">Add your e-mail! </string>
     <string name="hint_add_profile">Add your profile picture! </string>
     <string name="hint_button_add">ADD USER </string>
+    <string name="hint_title_profile">Profile</string>
+    <string name="hint_profile_name">Name</string>
+    <string name="hint_profile_phone">Phone</string>
+    <string name="hint_profile_address">Address</string>
+    <string name="hint_profile_email">E-mail</string>
+    <string name="label_research_profile">Select your profile!</string>
 </resources>

@@ -33,12 +33,12 @@
                     android:id="@+id/textViewRestaurantNameDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/restauranticon"
                     android:drawablePadding="18dp"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    app:drawableStartCompat="@drawable/restauranticon" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -54,12 +54,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:drawableStart="@drawable/telephone"
                     android:drawablePadding="18dp"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    app:drawableStartCompat="@drawable/telephone" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -75,12 +75,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:drawableStart="@drawable/city"
                     android:drawablePadding="18dp"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    app:drawableStartCompat="@drawable/city" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -96,12 +96,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:drawableStart="@drawable/state"
                     android:drawablePadding="18dp"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    app:drawableStartCompat="@drawable/state" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -117,12 +117,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:drawableStart="@drawable/area"
                     android:drawablePadding="18dp"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    app:drawableStartCompat="@drawable/area" />
             </RelativeLayout>
 
         </LinearLayout>
