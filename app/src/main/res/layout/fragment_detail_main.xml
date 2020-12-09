@@ -39,6 +39,17 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textColor="#000000"
                     app:drawableStartCompat="@drawable/restauranticon" />
+
+                <CheckBox
+                    android:id="@+id/favbutton"
+                    style="?android:attr/starStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/purple_200"
+                    android:textColorHighlight="#673AB7"
+                    android:textColorLink="#673AB7"
+                    android:textCursorDrawable="@color/purple_500" />
             </RelativeLayout>
 
             <RelativeLayout

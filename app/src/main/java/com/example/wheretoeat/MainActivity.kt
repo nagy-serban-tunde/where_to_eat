@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 //        val navController = findNavController(R.id.nav_host_fragment)
         navController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.mainScreenFragment, R.id.profileScreenFragment))
+                R.id.profileScreenFragment,R.id.mainScreenFragment,R.id.profileAddScreenFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener {_, destination,_->
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-//    override fun onSupportNavigateUp(): Boolean {
-//        return navController.navigateUp() || super.onSupportNavigateUp()
-//    }
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
 }

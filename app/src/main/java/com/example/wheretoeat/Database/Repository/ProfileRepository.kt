@@ -20,7 +20,7 @@ class ProfileRepository(private val profileDao : ProfileDao) {
         profileDao.insert(profile)
     }
     @WorkerThread
-    suspend fun deleteFood(profile: ProfileData) {
+    suspend fun deleteProfile(profile: ProfileData) {
         profileDao.deleteProfile(profile)
     }
 

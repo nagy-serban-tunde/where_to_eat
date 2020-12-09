@@ -52,7 +52,6 @@ class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 //        spinner
         spinner = view.findViewById(R.id.SpinnerCountries)
         this.setSpinner(view.context)
-        this.setSpinnerListener()
 
         recyclerViewRestaurant.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
         return view
@@ -70,7 +69,14 @@ class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         restaurantViewModel.restList.observe(viewLifecycleOwner, {
             adapter.setData(it)
         })
-        textViewCountry.text = SplashFragment.coutryType}
+        textViewCountry.text = SplashFragment.coutryType
+    }
+    override fun onDestroy()
+    {
+        super.onDestroy()
+        spinner.onItemSelectedListener = null
+
+    }
 
     override fun onItemClick(data : RestaurantData)
     {
@@ -106,24 +112,28 @@ class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
             spinner.adapter = adap
             textViewCountry.text = SplashFragment.coutryType
         }
+        this.setSpinnerListener()
     }
 
      private fun setSpinnerListener() {
         spinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long)
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
             {
-                val textViewItem = view as TextView
-                if(textViewItem.text.toString() == "None") { }
-                else
+                if(view != null)
                 {
-                    SplashFragment.restaurantDataMemory.remove("res")
-                    SplashFragment.coutryType = textViewItem.text.toString()
+                    val textViewItem = view as TextView
+                    if(textViewItem.text.toString() == "None") { }
+                    else
+                    {
+                        SplashFragment.restaurantDataMemory.remove("res")
+                        SplashFragment.coutryType = textViewItem.text.toString()
 
-                    SplashFragment.num_current_page = 1
-                    restaurantViewModel.loadNewRestaurant()
+                        SplashFragment.num_current_page = 1
+                        restaurantViewModel.loadNewRestaurant()
 
-                    adapter.setData(l!!)
-                    textViewCountry.text = SplashFragment.coutryType
+                        adapter.setData(l!!)
+                        textViewCountry.text = SplashFragment.coutryType
+                    }
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {

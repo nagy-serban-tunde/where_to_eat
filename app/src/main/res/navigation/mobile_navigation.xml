@@ -53,7 +53,7 @@
     <fragment
         android:id="@+id/profileAddScreenFragment"
         android:name="com.example.wheretoeat.Fragments.AddProfileFragment"
-        android:label="fragment_add_profile"
+        android:label="Add profile"
         tools:layout="@layout/fragment_add_profile" >
         <action
             android:id="@+id/action_addProfileFragment_to_mainScreenFragment"

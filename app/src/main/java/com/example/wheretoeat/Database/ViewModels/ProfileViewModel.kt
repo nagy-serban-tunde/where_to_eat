@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
-    lateinit var allProfile: List<ProfileData>
+    var allProfile: List<ProfileData>? = null
 
     private val repository: ProfileRepository
     var onLoadingFinished: () -> Unit = {}
@@ -20,6 +20,13 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     init{
         val profileDao = WhereToEatDatabaseDatabase.getDatabase(application).profileDao()
         repository = ProfileRepository(profileDao)
+//        viewModelScope.launch {
+//            onLoadingFinished()
+//        }
+    }
+
+    fun getProfiles()
+    {
         viewModelScope.launch {
             allProfile = repository.getProfile()
             onLoadingFinished()
@@ -28,13 +35,14 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
 
     fun insert(profile: ProfileData) = viewModelScope.launch {
         repository.insert(profile)
+        getProfiles()
     }
 
 
     fun deleteFood(profile: ProfileData)
     {
         viewModelScope.launch (Dispatchers.IO ){
-            repository.deleteFood(profile)
+//            repository.deleteFood(profile)
         }
     }
     fun deleteAll()

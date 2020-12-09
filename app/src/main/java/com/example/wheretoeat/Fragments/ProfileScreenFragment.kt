@@ -1,7 +1,6 @@
 package com.example.wheretoeat.Fragments
 
 import android.content.Context
-import android.media.Ringtone
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,8 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.wheretoeat.Adapters.FavouriteRestaurantAdapter
 import com.example.wheretoeat.Database.Entities.ProfileData
+import com.example.wheretoeat.Database.ViewModels.FavouriteRestaurantViewModel
 import com.example.wheretoeat.Database.ViewModels.ProfileViewModel
 import com.example.wheretoeat.R
 
@@ -24,8 +27,12 @@ class ProfileScreenFragment : Fragment() {
     lateinit var spinnerProfile : Spinner
 
     private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var favouriteRestaurantViewModel: FavouriteRestaurantViewModel
+    private lateinit var recyclerViewFavouriteRestaurant: RecyclerView
 
     lateinit var profiles : List<ProfileData>
+
+    var adapter : FavouriteRestaurantAdapter= FavouriteRestaurantAdapter(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,14 +52,25 @@ class ProfileScreenFragment : Fragment() {
         textViewAddressProfile = view.findViewById(R.id.textViewAddressProfile)
         textViewEmailProfile = view.findViewById(R.id.textViewEmailProfile)
         spinnerProfile = view.findViewById(R.id.SpinnerProfile)
+        recyclerViewFavouriteRestaurant = view.findViewById(R.id.favouriteRestaurantRecycler)
 
         profileViewModel = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
 
         profileViewModel.onLoadingFinished={
-            profiles = profileViewModel.allProfile
+            profiles = profileViewModel.allProfile!!
             setSpinner(view.context)
         }
+        profileViewModel.getProfiles()
+        this.initRecyclerView(view.context)
         return view
+    }
+
+    private fun initRecyclerView(context: Context)
+    {
+        recyclerViewFavouriteRestaurant.layoutManager = LinearLayoutManager(context)
+        favouriteRestaurantViewModel = ViewModelProvider(requireActivity()).get(FavouriteRestaurantViewModel::class.java)
+        recyclerViewFavouriteRestaurant.adapter = adapter
+
     }
 
     private fun setSpinner(context: Context) {
@@ -78,6 +96,10 @@ class ProfileScreenFragment : Fragment() {
                     textViewEmailProfile.text = profiles[position-1].emailProfile
                     textViewAddressProfile.text = profiles[position-1].addressProfile
                     Glide.with(context).load(profiles[position-1].picture).into(imageViewProfileProfile)
+                    favouriteRestaurantViewModel.getFavouriteRestaurants((position).toLong())
+                    favouriteRestaurantViewModel.allFavouriteRestaurant.observe(viewLifecycleOwner){
+                        adapter.setData(it)
+                    }
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -85,5 +107,6 @@ class ProfileScreenFragment : Fragment() {
             }
         }
     }
+
 
 }

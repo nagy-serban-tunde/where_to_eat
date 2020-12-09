@@ -3,6 +3,7 @@ package com.example.wheretoeat.Fragments
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.wheretoeat.Database.Entities.ProfileData
 import com.example.wheretoeat.Database.ViewModels.ProfileViewModel
+import com.example.wheretoeat.FileUtil
 import com.example.wheretoeat.R
 
 
@@ -71,8 +73,8 @@ class AddProfileFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 0 && resultCode == RESULT_OK) {
-            data?.dataString?.let { imageUrl ->
-                this.url = imageUrl
+            data?.data?.let { imageUrl ->
+                this.url = FileUtil.from(requireActivity(), imageUrl).path
                 view?.context?.let { Glide.with(it).load(imageUrl).into(imageViewProfileAdd) }
             }
         }
@@ -91,6 +93,7 @@ class AddProfileFragment : Fragment() {
         }
         else
         {
+
             val profileItem = ProfileData(0,name,url,address,phone,email)
             profileViewModel.insert(profileItem)
             Toast.makeText(requireContext(),"Successfully added!", Toast.LENGTH_LONG).show()

@@ -16,4 +16,5 @@
     <string name="hint_profile_address">Address</string>
     <string name="hint_profile_email">E-mail</string>
     <string name="label_research_profile">Select your profile!</string>
+    <string name="label_favouritelist_profile">Your favouirite restaurant list </string>
 </resources>
