@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.ProfileScreenFragment">
+    tools:context=".Fragments.UpdateProfileFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,48 +28,28 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:textSize="26dp"
-                    android:hint="@string/hint_title_profile"
+                    android:hint="@string/title_update_profile"
                     android:gravity="center"/>
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/RelativeLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp">
-                <TextView
-                    android:id="@+id/textview"
+                android:layout_marginRight="30dp">
+                <EditText
+                    android:id="@+id/EditTextNameUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_research_profile"
-                    android:gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:hint="@string/hint_add_name"
                     android:fontFamily="sans-serif-medium"
+                    android:inputType="text"
                     android:textSize="20sp"
-                    android:drawablePadding="18dp"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/RelativeLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp">
-                <Spinner
-                    android:id="@+id/SpinnerProfile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:drawablePadding="18dp"
-                    android:drawableStart="@drawable/research"/>
+                    android:drawableStart="@drawable/user"/>
             </RelativeLayout>
-            <ImageView
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
-                android:id="@+id/imageViewProfileProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
             <RelativeLayout
                 android:id="@+id/RelativeLayout3"
                 android:layout_width="match_parent"
@@ -77,34 +57,17 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="30dp">
-                <TextView
-                    android:id="@+id/textViewNameProfile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:hint="@string/hint_profile_name"
-                    android:fontFamily="sans-serif-medium"
-                    android:textSize="20sp"
-                    android:drawablePadding="18dp"
-                    app:drawableStartCompat="@drawable/user" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/RelativeLayout4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="30dp">
-                <TextView
-                    android:id="@+id/textViewPhoneProfile"
+                <EditText
+                    android:id="@+id/EditTextPhoneUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:fontFamily="sans-serif-medium"
-                    android:hint="@string/hint_profile_phone"
+                    android:inputType="phone"
+                    android:hint="@string/hint_add_phone"
                     android:textSize="20sp"
                     android:drawablePadding="18dp"
-                    app:drawableStartCompat="@drawable/telephone" />
+                    android:drawableStart="@drawable/telephone"/>
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/RelativeLayout5"
@@ -113,16 +76,29 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="30dp">
-                <TextView
-                    android:id="@+id/textViewAddressProfile"
+                <EditText
+                    android:id="@+id/EditTextAdressUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:fontFamily="sans-serif-medium"
-                    android:hint="@string/hint_profile_address"
+                    android:inputType="text"
+                    android:hint="@string/hint_add_address"
                     android:textSize="20sp"
                     android:drawablePadding="18dp"
-                    app:drawableStartCompat="@drawable/area" />
+                    android:drawableStart="@drawable/area"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/RelativeLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="30dp">
+                <ImageView
+                    android:id="@+id/imageViewProfileUpdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/RelativeLayout6"
@@ -130,32 +106,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginRight="30dp">
-                <TextView
-                    android:id="@+id/textViewEmailProfile"
-                    android:layout_width="match_parent"
+                android:layout_marginRight="30dp"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/buttonProfileUpdate"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:fontFamily="sans-serif-medium"
-                    android:hint="@string/hint_profile_email"
+                    android:inputType="text"
+                    android:hint="@string/hint_add_profile"
                     android:textSize="20sp"
                     android:drawablePadding="18dp"
-                    app:drawableStartCompat="@drawable/email" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/RelativeLayout10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center">
-                <Button
-                    android:id="@+id/ButtonUpdate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_update_profile"
-                    app:backgroundTint="#908F93" />
+                    app:backgroundTint="#908F93"/>
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/RelativeLayout7"
@@ -165,25 +128,34 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="30dp">
-                <TextView
-                    android:id="@+id/textviewFavouiriteList"
+                <EditText
+                    android:id="@+id/EditTextAdressEmailUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_favouritelist_profile"
-                    android:gravity="center"
+                    android:layout_alignParentTop="true"
                     android:fontFamily="sans-serif-medium"
+                    android:inputType="textEmailAddress"
+                    android:hint="@string/hint_add_email"
                     android:textSize="20sp"
-                    android:drawablePadding="18dp"/>
+                    android:drawablePadding="18dp"
+                    android:drawableStart="@drawable/email"/>
             </RelativeLayout>
-            <androidx.recyclerview.widget.RecyclerView
+            <RelativeLayout
+                android:id="@+id/RelativeLayout10"
                 android:layout_width="match_parent"
-                android:id="@+id/favouriteRestaurantRecycler"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/textviewFavouiriteList"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/ButtonUpdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_update_profile"
+                    app:backgroundTint="#908F93" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

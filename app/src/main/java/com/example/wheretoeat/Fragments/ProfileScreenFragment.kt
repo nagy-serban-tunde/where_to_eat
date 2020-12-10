@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -25,6 +27,7 @@ class ProfileScreenFragment : Fragment() {
     lateinit var textViewAddressProfile : TextView
     lateinit var textViewEmailProfile : TextView
     lateinit var spinnerProfile : Spinner
+    lateinit var buttonUpdate : Button
 
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var favouriteRestaurantViewModel: FavouriteRestaurantViewModel
@@ -32,8 +35,11 @@ class ProfileScreenFragment : Fragment() {
 
     lateinit var profiles : List<ProfileData>
 
-    var adapter : FavouriteRestaurantAdapter= FavouriteRestaurantAdapter(this)
+    var id_res : Int = -1
 
+    var img_url : String? = null
+
+    var adapter : FavouriteRestaurantAdapter= FavouriteRestaurantAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +59,7 @@ class ProfileScreenFragment : Fragment() {
         textViewEmailProfile = view.findViewById(R.id.textViewEmailProfile)
         spinnerProfile = view.findViewById(R.id.SpinnerProfile)
         recyclerViewFavouriteRestaurant = view.findViewById(R.id.favouriteRestaurantRecycler)
+        buttonUpdate = view.findViewById(R.id.ButtonUpdate)
 
         profileViewModel = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
 
@@ -61,7 +68,23 @@ class ProfileScreenFragment : Fragment() {
             setSpinner(view.context)
         }
         profileViewModel.getProfiles()
+
         this.initRecyclerView(view.context)
+
+        buttonUpdate.setOnClickListener()
+        {
+            if (id_res != -1)
+            {
+                val bundle = bundleOf("id" to "$id_res","name" to textViewNameProfile.text,
+                    "img_url" to img_url, "phone" to textViewPhoneProfile.text, "address" to textViewAddressProfile.text,
+                    "email" to textViewEmailProfile.text)
+                findNavController().navigate(R.id.updateProfileFragment,bundle)
+            }
+            else{
+                Toast.makeText(requireContext(),"Not changed user!", Toast.LENGTH_LONG).show()
+            }
+        }
+
         return view
     }
 
@@ -85,20 +108,25 @@ class ProfileScreenFragment : Fragment() {
 
     private fun setSpinnerListener(context: Context) {
         spinnerProfile.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long)
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
             {
-                val textViewItem = view as TextView
-                if(textViewItem.text.toString() == "None") { }
-                else
+                if (view != null)
                 {
-                    textViewNameProfile.text = profiles[position-1].nameProfile
-                    textViewPhoneProfile.text = profiles[position-1].phoneProfle
-                    textViewEmailProfile.text = profiles[position-1].emailProfile
-                    textViewAddressProfile.text = profiles[position-1].addressProfile
-                    Glide.with(context).load(profiles[position-1].picture).into(imageViewProfileProfile)
-                    favouriteRestaurantViewModel.getFavouriteRestaurants((position).toLong())
-                    favouriteRestaurantViewModel.allFavouriteRestaurant.observe(viewLifecycleOwner){
-                        adapter.setData(it)
+                    val textViewItem = view as TextView
+                    if(textViewItem.text.toString() == "None") { }
+                    else
+                    {
+                        id_res = position
+                        textViewNameProfile.text = profiles[position-1].nameProfile
+                        textViewPhoneProfile.text = profiles[position-1].phoneProfle
+                        textViewEmailProfile.text = profiles[position-1].emailProfile
+                        textViewAddressProfile.text = profiles[position-1].addressProfile
+                        Glide.with(context).load(profiles[position-1].picture).into(imageViewProfileProfile)
+                        img_url = profiles[position-1].picture
+                        favouriteRestaurantViewModel.getFavouriteRestaurants((position).toLong())
+                        favouriteRestaurantViewModel.allFavouriteRestaurant.observe(viewLifecycleOwner){
+                            adapter.setData(it)
+                        }
                     }
                 }
             }

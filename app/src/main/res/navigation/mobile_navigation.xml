@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_profileScreenFragment_to_mainScreenFragment"
             app:destination="@id/mainScreenFragment" />
+        <action
+            android:id="@+id/action_profileScreenFragment_to_updateProfileFragment"
+            app:destination="@id/updateProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/deatilFragmentMain"
@@ -60,6 +63,15 @@
             app:destination="@id/mainScreenFragment" />
         <action
             android:id="@+id/action_addProfileFragment_to_profileScreenFragment"
+            app:destination="@id/profileScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.example.wheretoeat.Fragments.UpdateProfileFragment"
+        android:label="fragment_update_profile"
+        tools:layout="@layout/fragment_update_profile" >
+        <action
+            android:id="@+id/action_updateProfileFragment_to_profileScreenFragment"
             app:destination="@id/profileScreenFragment" />
     </fragment>
 

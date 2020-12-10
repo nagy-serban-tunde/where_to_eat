@@ -22,6 +22,7 @@ interface Api {
     fun getRestaurants(@Query("country")state:String,@Query("page")page:Int): Call<RespData>
 
     companion object {
-        const val BASE_URL = "https://opentable.herokuapp.com/api/"
+//        const val BASE_URL = "https://opentable.herokuapp.com/api/"
+        const val BASE_URL = "https://ratpark-api.imok.space/"
     }
 }

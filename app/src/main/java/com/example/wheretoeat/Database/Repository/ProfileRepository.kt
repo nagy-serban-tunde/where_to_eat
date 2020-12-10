@@ -20,6 +20,12 @@ class ProfileRepository(private val profileDao : ProfileDao) {
         profileDao.insert(profile)
     }
     @WorkerThread
+    suspend fun update(profile: ProfileData)
+    {
+        profileDao.update(profile)
+    }
+
+    @WorkerThread
     suspend fun deleteProfile(profile: ProfileData) {
         profileDao.deleteProfile(profile)
     }

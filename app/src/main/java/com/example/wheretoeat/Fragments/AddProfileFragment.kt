@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.wheretoeat.Database.Entities.ProfileData
 import com.example.wheretoeat.Database.ViewModels.ProfileViewModel
@@ -93,12 +94,10 @@ class AddProfileFragment : Fragment() {
         }
         else
         {
-
             val profileItem = ProfileData(0,name,url,address,phone,email)
             profileViewModel.insert(profileItem)
             Toast.makeText(requireContext(),"Successfully added!", Toast.LENGTH_LONG).show()
-            var el = profileViewModel.allProfile
-            Log.i("resp",el.toString())
+            findNavController().navigate(R.id.profileScreenFragment)
         }
     }
 

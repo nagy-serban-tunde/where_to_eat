@@ -3,18 +3,21 @@ package com.example.wheretoeat.Database.Repository
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.example.wheretoeat.Database.Dao.FavouriteRestaurnatDao
-import com.example.wheretoeat.Database.Dao.ProfileDao
 import com.example.wheretoeat.Database.Entities.FavouriteRestaurantData
-import com.example.wheretoeat.Database.Entities.ProfileData
 
 class FavouriteRestaurantRepository(private val favouriteRestaurnatDao: FavouriteRestaurnatDao) {
 
     val allfavouriterestaurant: LiveData<List<FavouriteRestaurantData>> = favouriteRestaurnatDao.getFavouriteRestaurant(1)
     @Suppress("RedundantSuspendModifier")
-
     fun getFavouriteRestaurant(id : Long)  : LiveData<List<FavouriteRestaurantData>>
     {
         return favouriteRestaurnatDao.getFavouriteRestaurant(id)
+    }
+
+    @WorkerThread
+    fun getIdFavouriteRestaurant(phone : String) : LiveData<Int>
+    {
+        return favouriteRestaurnatDao.getIdFavouriteRestaurant(phone)
     }
 
     @WorkerThread
@@ -22,9 +25,10 @@ class FavouriteRestaurantRepository(private val favouriteRestaurnatDao: Favourit
     {
         favouriteRestaurnatDao.insert(favoriteRestaurantData)
     }
+
     @WorkerThread
-    suspend fun deleteFood(favoriteRestaurantData: FavouriteRestaurantData) {
-        favouriteRestaurnatDao.deleteProfile(favoriteRestaurantData)
+    suspend fun deleteFavouriteRestaurant(favoriteRestaurantData: FavouriteRestaurantData) {
+        favouriteRestaurnatDao.deleteFavouriteRestaurant(favoriteRestaurantData)
     }
 
     @WorkerThread

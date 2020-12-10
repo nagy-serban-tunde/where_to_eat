@@ -20,9 +20,6 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     init{
         val profileDao = WhereToEatDatabaseDatabase.getDatabase(application).profileDao()
         repository = ProfileRepository(profileDao)
-//        viewModelScope.launch {
-//            onLoadingFinished()
-//        }
     }
 
     fun getProfiles()
@@ -38,11 +35,14 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
         getProfiles()
     }
 
+    fun update(profile: ProfileData) = viewModelScope.launch {
+        repository.update(profile)
+    }
 
-    fun deleteFood(profile: ProfileData)
+    fun deleteProfile(profile: ProfileData)
     {
         viewModelScope.launch (Dispatchers.IO ){
-//            repository.deleteFood(profile)
+            repository.deleteProfile(profile)
         }
     }
     fun deleteAll()

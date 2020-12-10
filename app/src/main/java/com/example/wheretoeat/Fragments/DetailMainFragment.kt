@@ -1,19 +1,20 @@
 package com.example.wheretoeat.Fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.DialogFragment
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.wheretoeat.Database.Entities.FavouriteRestaurantData
+import com.example.wheretoeat.Database.Entities.ProfileData
 import com.example.wheretoeat.Database.ViewModels.FavouriteRestaurantViewModel
+import com.example.wheretoeat.Database.ViewModels.ProfileViewModel
 import com.example.wheretoeat.R
 
 
@@ -29,9 +30,17 @@ class DetailMainFragment : Fragment() {
     private lateinit var buttonFav : CheckBox
 
     private lateinit var favouriteRestaurantViewModel: FavouriteRestaurantViewModel
+    private lateinit var profileViewModel: ProfileViewModel
+
+    lateinit var profiles : List<ProfileData>
+    var id_res : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(context, "YES", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(
@@ -47,6 +56,11 @@ class DetailMainFragment : Fragment() {
         imageViewRestaurant  = view.findViewById(R.id.imageViewRestaurant)
         buttonFav = view.findViewById(R.id.favbutton)
         favouriteRestaurantViewModel = ViewModelProvider(requireActivity()).get(FavouriteRestaurantViewModel::class.java)
+        profileViewModel = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
+
+        profileViewModel.onLoadingFinished={
+            profiles = profileViewModel.allProfile!!
+        }
 
         var name = arguments?.getString("name")
         textViewRestaurantName.text = name
@@ -61,17 +75,31 @@ class DetailMainFragment : Fragment() {
         var img_url =  arguments?.getString("img_url")
         Glide.with(view.context).load(img_url).into(imageViewRestaurant)
 
+        favouriteRestaurantViewModel.getIdFavouriteRestaurant(phone!!)
+        var id = favouriteRestaurantViewModel.id
+        id.observe(viewLifecycleOwner) {
+            Log.i("resp","${it}")
+            id_res = it
+        }
+
         buttonFav.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                name?.let { FavouriteRestaurantData(0, 1, img_url!!, it, phone!!, city!!, area!!) }?.let { favouriteRestaurantViewModel.insert(it) }
+                try{
+                    name?.let { FavouriteRestaurantData(0, 1, img_url!!, it, phone!!, city!!, area!!) }?.let { favouriteRestaurantViewModel.insert(it) }
+                }catch (value :Exception){
+                    Toast.makeText(requireContext(), "Not user!", Toast.LENGTH_LONG).show()
+                }
                 Toast.makeText(requireContext(), "Favourite!", Toast.LENGTH_LONG).show()
             }
             else{
+                id_res?.let {
+                    favouriteRestaurantViewModel.deleteFavouriteRestaurant(FavouriteRestaurantData(it,1,img_url!!,name!!,phone!!,city!!,area!!))
+                }
+//                favouriteRestaurantViewModel.deleteAll()
                 Toast.makeText(requireContext(), "Not favourite!", Toast.LENGTH_LONG).show()
             }
         }
 
         return view
     }
-
 }

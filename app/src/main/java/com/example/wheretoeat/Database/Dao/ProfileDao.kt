@@ -13,6 +13,9 @@ interface ProfileDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(profile: ProfileData)
 
+    @Update
+    suspend fun update(profile: ProfileData)
+
     @Delete
     suspend fun deleteProfile(profile: ProfileData)
 
