@@ -77,12 +77,12 @@ class DetailFavouriteFragment : Fragment() {
                 FavouriteRestaurantViewModel::class.java
         )
 
-        this.setButtonFav(view)
+        this.setButtonFav()
 
         return view
     }
 
-    private fun setButtonFav(view : View)
+    private fun setButtonFav()
     {
         favouriteRestaurantViewModel.getIdFavouriteRestaurant(phone!!)
         var idFavorRes = favouriteRestaurantViewModel.id
