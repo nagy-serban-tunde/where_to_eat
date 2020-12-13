@@ -16,7 +16,7 @@
     <string name="hint_profile_address">Address</string>
     <string name="hint_profile_email">E-mail</string>
     <string name="label_research_profile">Select your profile!</string>
-    <string name="label_favouritelist_profile">Your favouirite restaurant list </string>
+    <string name="label_favouritelist_profile">Your favourite restaurant list </string>
     <string name="button_update_profile"> UPDATE </string>
     <string name="title_update_profile"> Update profile </string>
     <string name="title_dialog">Who are you?</string>

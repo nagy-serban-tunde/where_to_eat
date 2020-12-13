@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_profileScreenFragment_to_updateProfileFragment"
             app:destination="@id/updateProfileFragment" />
+        <action
+            android:id="@+id/action_profileScreenFragment_to_detailFavouriteFragment"
+            app:destination="@id/detailFavouriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/deatilFragmentMain"
@@ -68,10 +71,19 @@
     <fragment
         android:id="@+id/updateProfileFragment"
         android:name="com.example.wheretoeat.Fragments.UpdateProfileFragment"
-        android:label="fragment_update_profile"
+        android:label="Update Profile"
         tools:layout="@layout/fragment_update_profile" >
         <action
             android:id="@+id/action_updateProfileFragment_to_profileScreenFragment"
+            app:destination="@id/profileScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFavouriteFragment"
+        android:name="com.example.wheretoeat.Fragments.DetailFavouriteFragment"
+        android:label="Details favourite restaurant"
+        tools:layout="@layout/fragment_detail_favourite" >
+        <action
+            android:id="@+id/action_detailFavouriteFragment_to_profileScreenFragment"
             app:destination="@id/profileScreenFragment" />
     </fragment>
 

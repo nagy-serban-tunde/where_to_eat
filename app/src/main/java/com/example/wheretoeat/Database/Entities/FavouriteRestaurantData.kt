@@ -21,6 +21,9 @@ class FavouriteRestaurantData(
 
         @ColumnInfo(name = "restaurantcity") val restaurantcity: String,
 
-        @ColumnInfo(name = "restaurantarea") val restaurantarea : String
+        @ColumnInfo(name = "restaurantarea") val restaurantarea : String,
+
+        @ColumnInfo(name = "restaurantstate") val restaurantstate : String,
+
 
 )

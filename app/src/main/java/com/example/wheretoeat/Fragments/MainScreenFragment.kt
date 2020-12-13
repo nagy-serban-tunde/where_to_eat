@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wheretoeat.Adapters.RestaurantAdapter
+import com.example.wheretoeat.Database.Entities.FavouriteRestaurantData
 import com.example.wheretoeat.Database.Entities.RestaurantData
 import com.example.wheretoeat.Database.ViewModels.RestaurantViewModel
 import com.example.wheretoeat.R

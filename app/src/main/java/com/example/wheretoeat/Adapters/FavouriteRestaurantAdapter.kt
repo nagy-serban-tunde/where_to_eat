@@ -43,8 +43,8 @@ class FavouriteRestaurantAdapter( private val listener: ProfileScreenFragment) :
             view.setOnClickListener(this)
         }
         override fun onClick(view: View) {
-//            val data = restaurantList[adapterPosition]
-//            listener.onItemClick(data)
+            val data = favouriteRestaurantList[adapterPosition]
+            listener.onItemClick(data)
         }
     }
     interface OnItemClickListener{

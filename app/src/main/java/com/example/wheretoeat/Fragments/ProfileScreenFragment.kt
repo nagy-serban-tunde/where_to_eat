@@ -2,7 +2,6 @@ package com.example.wheretoeat.Fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wheretoeat.Adapters.FavouriteRestaurantAdapter
+import com.example.wheretoeat.Database.Entities.FavouriteRestaurantData
 import com.example.wheretoeat.Database.Entities.ProfileData
 import com.example.wheretoeat.Database.ViewModels.FavouriteRestaurantViewModel
 import com.example.wheretoeat.Database.ViewModels.ProfileViewModel
@@ -134,5 +134,18 @@ class ProfileScreenFragment : Fragment() {
 
             }
         }
+    }
+
+    fun onItemClick(data: FavouriteRestaurantData)
+    {
+        var name = data.restaurantname
+        var phone = data.restaurantphone
+        var city = data.restaurantcity
+        var img_url = data.restaurantpicture
+        var state = data.restaurantstate
+        var area = data.restaurantarea
+        val bundle = bundleOf("id" to "$id_res","name" to name, "img_url" to img_url, "phone" to phone, "city" to city,
+                                                "state" to state, "area" to area)
+        findNavController().navigate(R.id.detailFavouriteFragment, bundle)
     }
 }
