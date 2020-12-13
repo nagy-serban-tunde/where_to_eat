@@ -35,11 +35,11 @@ class ProfileScreenFragment : Fragment() {
 
     lateinit var profiles : List<ProfileData>
 
-    var id_res : Int = -1
+    private var id_res : Int = -1
 
-    var img_url : String? = null
+    private var img_url : String? = null
 
-    var adapter : FavouriteRestaurantAdapter= FavouriteRestaurantAdapter(this)
+    private var adapter : FavouriteRestaurantAdapter= FavouriteRestaurantAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

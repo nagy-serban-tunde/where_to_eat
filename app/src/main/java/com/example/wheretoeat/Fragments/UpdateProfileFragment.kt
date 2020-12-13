@@ -32,12 +32,12 @@ class UpdateProfileFragment : Fragment() {
     lateinit var editTextAddressProfileUpdate: EditText
     lateinit var editTextEmailProfileUpdate: EditText
 
-    var id : Int? = null
-    var name : String? = null
+    private var id : Int? = null
+    private var name : String? = null
     lateinit var img_url : String
-    var phone : String? = null
-    var address : String? = null
-    var email : String? = null
+    private var phone : String? = null
+    private var address : String? = null
+    private var email : String? = null
 
     private lateinit var profileViewModel: ProfileViewModel
 

@@ -24,7 +24,7 @@ open class SplashFragment : Fragment() {
         var restaurantDataMemory = HashMap<String, List<RestaurantData>>()
         var countriesDataMemory = HashMap<String, ArrayList<String>>()
         var num_current_page: Int = 1
-        var coutryType : String = "US"
+        var countryType : String = "US"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

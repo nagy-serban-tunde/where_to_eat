@@ -33,17 +33,17 @@ class DetailMainFragment : Fragment() {
     private lateinit var profileViewModel: ProfileViewModel
 
     lateinit var profiles : List<ProfileData>
-    var id_res : Int? = null
-    var id_user : Int = -1
+    private var id_res : Int? = null
+    private var id_user : Int = -1
 
-    var name : String? = null
-    var phone : String? = null
-    var city : String? = null
-    var state : String? = null
-    var area : String? = null
-    var img_url : String? = null
+    private var name : String? = null
+    private var phone : String? = null
+    private var city : String? = null
+    private var state : String? = null
+    private var area : String? = null
+    private var img_url : String? = null
 
-    var favouriteRestaurantList: List<FavouriteRestaurantData> = emptyList()
+    private var favouriteRestaurantList: List<FavouriteRestaurantData> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

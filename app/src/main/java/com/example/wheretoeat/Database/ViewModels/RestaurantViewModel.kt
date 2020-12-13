@@ -34,7 +34,7 @@ class RestaurantViewModel : ViewModel() {
                 .build()
 
         val api = retrofit.create(Api::class.java)
-        api.getRestaurants(SplashFragment.coutryType,SplashFragment.num_current_page).enqueue(object : Callback<RespData> {
+        api.getRestaurants(SplashFragment.countryType,SplashFragment.num_current_page).enqueue(object : Callback<RespData> {
             override fun onResponse(call: Call<RespData>, response: Response<RespData>) {
                 if(response.isSuccessful &&  response.body() != null)
                 {
@@ -54,7 +54,7 @@ class RestaurantViewModel : ViewModel() {
             .build()
 
         val api = retrofit.create(Api::class.java)
-        api.getRestaurants(SplashFragment.coutryType,SplashFragment.num_current_page).enqueue(object : Callback<RespData> {
+        api.getRestaurants(SplashFragment.countryType,SplashFragment.num_current_page).enqueue(object : Callback<RespData> {
             override fun onResponse(call: Call<RespData>, response: Response<RespData>) {
                 if(response.isSuccessful &&  response.body() != null)
                 {

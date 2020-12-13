@@ -2,7 +2,6 @@ package com.example.wheretoeat.Fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wheretoeat.Adapters.RestaurantAdapter
-import com.example.wheretoeat.Database.Entities.FavouriteRestaurantData
 import com.example.wheretoeat.Database.Entities.RestaurantData
 import com.example.wheretoeat.Database.ViewModels.RestaurantViewModel
 import com.example.wheretoeat.R
@@ -26,8 +24,8 @@ class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
 
     private lateinit var recyclerViewRestaurant: RecyclerView
     private lateinit var restaurantViewModel: RestaurantViewModel
-    var adapter : RestaurantAdapter= RestaurantAdapter(this.context, this)
-    var l = SplashFragment.restaurantDataMemory.get("res")
+    private var adapter : RestaurantAdapter= RestaurantAdapter(this.context, this)
+    private var l = SplashFragment.restaurantDataMemory.get("res")
 
     private lateinit var  spinner: Spinner
     private lateinit var textViewCountry : TextView
@@ -70,7 +68,7 @@ class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
         restaurantViewModel.restList.observe(viewLifecycleOwner, {
             adapter.setData(it)
         })
-        textViewCountry.text = SplashFragment.coutryType
+        textViewCountry.text = SplashFragment.countryType
     }
     override fun onDestroy()
     {
@@ -111,7 +109,7 @@ class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
             list.addAll(l)
             var adap: ArrayAdapter<String> = ArrayAdapter(context, android.R.layout.simple_spinner_item, list)
             spinner.adapter = adap
-            textViewCountry.text = SplashFragment.coutryType
+            textViewCountry.text = SplashFragment.countryType
         }
         this.setSpinnerListener()
     }
@@ -127,13 +125,13 @@ class MainScreenFragment : Fragment(), RestaurantAdapter.OnItemClickListener {
                     else
                     {
                         SplashFragment.restaurantDataMemory.remove("res")
-                        SplashFragment.coutryType = textViewItem.text.toString()
+                        SplashFragment.countryType = textViewItem.text.toString()
 
                         SplashFragment.num_current_page = 1
                         restaurantViewModel.loadNewRestaurant()
 
                         adapter.setData(l!!)
-                        textViewCountry.text = SplashFragment.coutryType
+                        textViewCountry.text = SplashFragment.countryType
                     }
                 }
             }
