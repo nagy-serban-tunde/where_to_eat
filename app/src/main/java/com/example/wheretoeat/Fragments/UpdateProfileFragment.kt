@@ -106,8 +106,9 @@ class UpdateProfileFragment : Fragment() {
         Log.i("resp","${phone!!.length}")
         address = editTextAddressProfileUpdate.text.toString()
         email = editTextEmailProfileUpdate.text.toString()
-        if( !this::img_url.isInitialized || !this.inputCheck(this.name!!, this.phone!!, this.address!!, this.img_url!!, this.email!!)
-            || !this.isEmailValid(this.email!!) || this.isLength(this.name!!, this.phone!!, this.address!!, this.img_url!!, this.email!!))
+        if( !this::img_url.isInitialized || !this.inputCheckText(this.name!!, this.phone!!, this.address!!, this.img_url!!, this.email!!)
+            || !this.isEmailValid(this.email!!) || this.isLength(this.name!!, this.phone!!, this.address!!, this.img_url!!, this.email!!)
+            || !this.inputCheckBlank(this.name!!, this.phone!!, this.address!!, this.img_url!!, this.email!!))
         {
             Toast.makeText(context,"Wrong data!", Toast.LENGTH_SHORT).show()
         }
@@ -131,7 +132,12 @@ class UpdateProfileFragment : Fragment() {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    private fun inputCheck(name: String, phone:String, address : String, url: String, email: String) : Boolean
+    private fun inputCheckText(name: String, phone:String, address : String, url: String, email: String) : Boolean
+    {
+        return !(TextUtils.isEmpty(name) && TextUtils.isEmpty(phone) && TextUtils.isEmpty(address) && TextUtils.isEmpty(url) && TextUtils.isEmpty(email))
+    }
+
+    private fun inputCheckBlank(name: String, phone:String, address : String, url: String, email: String) : Boolean
     {
         return !(name.isBlank() && phone.isBlank() && address.isBlank() && url.isBlank() && email.isBlank())
     }

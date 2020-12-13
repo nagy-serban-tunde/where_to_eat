@@ -135,6 +135,4 @@ class ProfileScreenFragment : Fragment() {
             }
         }
     }
-
-
 }

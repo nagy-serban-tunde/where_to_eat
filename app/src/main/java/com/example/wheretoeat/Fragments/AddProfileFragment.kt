@@ -88,7 +88,9 @@ class AddProfileFragment : Fragment() {
         val address : String = this.editTextAddressProfileAdd.text.toString()
         val email: String = this.editTextEmailProfileAdd.text.toString()
 
-        if( !this::url.isInitialized || !this.inputCheck(name, phone, address, this.url, email) || !this.isEmailValid(email))
+        if( !this::url.isInitialized || !this.inputCheckText(name, phone, address, this.url, email) || !this.isEmailValid(email)
+            || this.isLength(name, phone, address, this.url, email) || !this.isEmailValid(email)
+            || !this.inputCheckBlank(name, phone, address, this.url, email) || !this.isEmailValid(email) )
         {
             Toast.makeText(context,"Wrong data!",Toast.LENGTH_SHORT).show()
         }
@@ -101,12 +103,27 @@ class AddProfileFragment : Fragment() {
         }
     }
 
+    private fun isLength(name: String, phone:String, address : String, url: String, email: String):Boolean
+    {
+        if (name.length != 0 && phone.length != 0 && address.length != 0 && url.length != 0 && email.length != 0)
+        {
+            return false
+        }
+        return true
+    }
+
     fun isEmailValid(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    private fun inputCheck(name: String, phone:String, address : String, url: String, email: String) : Boolean
+    private fun inputCheckText(name: String, phone:String, address : String, url: String, email: String) : Boolean
     {
         return !(TextUtils.isEmpty(name) && TextUtils.isEmpty(phone) && TextUtils.isEmpty(address) && TextUtils.isEmpty(url) && TextUtils.isEmpty(email))
     }
+
+    private fun inputCheckBlank(name: String, phone:String, address : String, url: String, email: String) : Boolean
+    {
+        return !(name.isBlank() && phone.isBlank() && address.isBlank() && url.isBlank() && email.isBlank())
+    }
+
 }
