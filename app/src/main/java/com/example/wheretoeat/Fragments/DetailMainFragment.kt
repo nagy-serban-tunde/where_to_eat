@@ -47,6 +47,8 @@ class DetailMainFragment : Fragment() {
     var area : String? = null
     var img_url : String? = null
 
+    var favouriteRestaurantList: List<FavouriteRestaurantData> = emptyList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -97,7 +99,6 @@ class DetailMainFragment : Fragment() {
         favouriteRestaurantViewModel.getIdFavouriteRestaurant(phone!!)
         var idFavorRes = favouriteRestaurantViewModel.id
         idFavorRes.observe(viewLifecycleOwner) {
-            Log.i("resp", "${it}")
             id_res = it
         }
         buttonFav.setOnCheckedChangeListener { _, isChecked ->
@@ -144,10 +145,16 @@ class DetailMainFragment : Fragment() {
             }
             else
             {
-                name?.let { FavouriteRestaurantData(0, id_user , img_url!!, it, phone!!, city!!, area!!) }?.let { favouriteRestaurantViewModel.insert(it) }
-                Toast.makeText(requireContext(), "Favourite!", Toast.LENGTH_LONG).show()
+                if (checkedRestaurant())
+                {
+                    buttonFav.isChecked=true
+                    Toast.makeText(requireContext(), "This restaurant already is favourite!", Toast.LENGTH_LONG).show()
+                }
+                else{
+                    name?.let { FavouriteRestaurantData(0, id_user , img_url!!, it, phone!!, city!!, area!!) }?.let { favouriteRestaurantViewModel.insert(it) }
+                    Toast.makeText(requireContext(), "Favourite!", Toast.LENGTH_LONG).show()
+                }
             }
-
         })
         builder.setNegativeButton("Done",DialogInterface.OnClickListener{ dialog, id ->
             buttonFav.isChecked=false
@@ -155,15 +162,21 @@ class DetailMainFragment : Fragment() {
         })
         builder.show()
     }
+    private fun checkedRestaurant() : Boolean
+    {
+        for (i in favouriteRestaurantList)
+        {
+            if(i.restaurantarea == area && i.restaurantcity == city && i.restaurantname == name && i.user_id == id_user && i.restaurantphone == phone)
+            {
+                return true
+            }
+        }
+        return false
+    }
 
     private fun setSpinnerListener(spinner: Spinner) {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-            )
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
             {
                 if (view != null)
                 {
@@ -174,12 +187,14 @@ class DetailMainFragment : Fragment() {
                     else
                     {
                         id_user = position
-                        Log.i("resp", "$position")
+                        favouriteRestaurantViewModel.getFavouriteRestaurants((position).toLong())
+                        favouriteRestaurantViewModel.allFavouriteRestaurant.observe(viewLifecycleOwner){
+                            favouriteRestaurantList = it
+                        }
                     }
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
-
             }
         }
     }
