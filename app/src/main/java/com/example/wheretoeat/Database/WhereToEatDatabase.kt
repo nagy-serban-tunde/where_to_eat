@@ -6,14 +6,17 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.wheretoeat.Database.Dao.FavouriteRestaurnatDao
 import com.example.wheretoeat.Database.Dao.ProfileDao
+import com.example.wheretoeat.Database.Dao.RestaurantPicturesDao
 import com.example.wheretoeat.Database.Entities.FavouriteRestaurantData
 import com.example.wheretoeat.Database.Entities.ProfileData
+import com.example.wheretoeat.Database.Entities.RestaurantPicturesData
 
-@Database(entities = [ProfileData::class, FavouriteRestaurantData::class], version = 1, exportSchema = false)
+@Database(entities = [ProfileData::class, FavouriteRestaurantData::class, RestaurantPicturesData::class], version = 1, exportSchema = false)
 abstract class WhereToEatDatabaseDatabase : RoomDatabase() {
 
     abstract fun profileDao(): ProfileDao
     abstract fun favouriteRestaurantDao(): FavouriteRestaurnatDao
+    abstract fun restaurantsPicturesDao(): RestaurantPicturesDao
 
     companion object {
         @Volatile

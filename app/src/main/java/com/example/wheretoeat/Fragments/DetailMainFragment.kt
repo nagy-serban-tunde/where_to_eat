@@ -1,20 +1,28 @@
 package com.example.wheretoeat.Fragments
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import android.widget.ArrayAdapter
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.wheretoeat.Database.Entities.FavouriteRestaurantData
 import com.example.wheretoeat.Database.Entities.ProfileData
+import com.example.wheretoeat.Database.Entities.RestaurantPicturesData
 import com.example.wheretoeat.Database.ViewModels.FavouriteRestaurantViewModel
 import com.example.wheretoeat.Database.ViewModels.ProfileViewModel
+import com.example.wheretoeat.Database.ViewModels.RestaurantPicturesViewModel
+import com.example.wheretoeat.FileUtil
 import com.example.wheretoeat.R
 
 
@@ -25,12 +33,18 @@ class DetailMainFragment : Fragment() {
     private lateinit var textViewRestaurantCity: TextView
     private lateinit var textViewRestaurantState: TextView
     private lateinit var textViewRestaurantArea: TextView
-    private lateinit var imageViewRestaurant: ImageView
+
+    private lateinit var imageSwitcher: ImageSwitcher
+
+    private lateinit var buttonAddImage : Button
+    private lateinit var buttonPrevious : Button
+    private lateinit var buttonNext : Button
 
     private lateinit var buttonFav : CheckBox
 
     private lateinit var favouriteRestaurantViewModel: FavouriteRestaurantViewModel
     private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var restaurantPicturesViewModel: RestaurantPicturesViewModel
 
     lateinit var profiles : List<ProfileData>
     private var id_res : Int? = null
@@ -43,7 +57,11 @@ class DetailMainFragment : Fragment() {
     private var area : String? = null
     private var img_url : String? = null
 
+
     private var favouriteRestaurantList: List<FavouriteRestaurantData> = emptyList()
+
+    private lateinit var url : String
+    private var positionSwitcher : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,17 +77,12 @@ class DetailMainFragment : Fragment() {
         textViewRestaurantCity = view.findViewById(R.id.textViewRestaurantCityDetail)
         textViewRestaurantState = view.findViewById(R.id.textViewRestaurantStateDetail)
         textViewRestaurantArea = view.findViewById(R.id.textViewRestaurantAreaDetail)
-        imageViewRestaurant  = view.findViewById(R.id.imageViewRestaurant)
         buttonFav = view.findViewById(R.id.favbutton)
-        favouriteRestaurantViewModel = ViewModelProvider(requireActivity()).get(
-                FavouriteRestaurantViewModel::class.java
-        )
-        profileViewModel = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
-
-        profileViewModel.onLoadingFinished={
-            profiles = profileViewModel.allProfile!!
-        }
-        profileViewModel.getProfiles()
+        buttonAddImage = view.findViewById(R.id.ButtonAddImage)
+        imageSwitcher = view.findViewById(R.id.imageSwitcherRestaurant)
+        imageSwitcher.setFactory { ImageView(view.context) }
+        buttonNext = view.findViewById(R.id.ButtonNext)
+        buttonPrevious = view.findViewById(R.id.ButtonPrevious)
 
         name = arguments?.getString("name")
         textViewRestaurantName.text = name
@@ -81,13 +94,85 @@ class DetailMainFragment : Fragment() {
         textViewRestaurantState.text = state
         area = arguments?.getString("area")
         textViewRestaurantArea.text = area
-
         img_url =  arguments?.getString("img_url")
-        Glide.with(view.context).load(img_url).into(imageViewRestaurant)
 
+        favouriteRestaurantViewModel = ViewModelProvider(requireActivity()).get(
+                FavouriteRestaurantViewModel::class.java
+        )
+        profileViewModel = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
+        restaurantPicturesViewModel = ViewModelProvider(requireActivity()).get(RestaurantPicturesViewModel::class.java)
+
+        profileViewModel.onLoadingFinished={
+            profiles = profileViewModel.allProfile!!
+        }
+        profileViewModel.getProfiles()
+
+        restaurantPicturesViewModel.getRestaurantPicturesPhone(phone!!)
+        restaurantPicturesViewModel.oneRestaurantPictures?.observe(viewLifecycleOwner){
+            var restaurantsPictureList = it.map { it.new_picture_string }
+            setImageSwitcher(restaurantsPictureList,view)
+        }
         setButtonFav(view)
+        setButtonAddImage()
 
         return view
+    }
+
+    private fun setImageSwitcher(restaurantsPictureList : List<String>,view: View){
+        if(!restaurantsPictureList.isEmpty())
+        {
+            imageSwitcher.setImageURI(restaurantsPictureList[0].toUri())
+        }
+        else
+        {
+            imageSwitcher.setImageURI(this.img_url?.toUri())
+        }
+
+        buttonNext.setOnClickListener{
+            if (positionSwitcher < restaurantsPictureList.size-1)
+            {
+                buttonPrevious.isEnabled = true
+                positionSwitcher++
+                imageSwitcher.setImageURI(restaurantsPictureList[positionSwitcher].toUri())
+            }
+            else
+            {
+                buttonNext.isEnabled = false
+                buttonPrevious.isEnabled = true
+            }
+        }
+
+        buttonPrevious.setOnClickListener{
+            if(positionSwitcher > 0 )
+            {
+                buttonNext.isEnabled = true
+                positionSwitcher--
+                imageSwitcher.setImageURI(restaurantsPictureList[positionSwitcher].toUri())
+            }
+            else{
+                buttonNext.isEnabled = true
+                buttonPrevious.isEnabled = false
+            }
+        }
+
+    }
+
+    private fun setButtonAddImage()
+    {
+        buttonAddImage.setOnClickListener{
+            startActivityForResult(Intent.createChooser(Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT), "Select the image"), 0)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+            data?.data?.let { imageUrl ->
+                this.url = FileUtil.from(requireActivity(), imageUrl).path
+                restaurantPicturesViewModel.insert(RestaurantPicturesData(0,phone!!,this.url))
+                positionSwitcher = 0
+            }
+        }
     }
 
     private fun setButtonFav(view : View)
@@ -99,16 +184,12 @@ class DetailMainFragment : Fragment() {
         }
         buttonFav.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                try{
-                    this.dialog(view)
-                }catch (value: Exception){
-                    Toast.makeText(requireContext(), "Not user!", Toast.LENGTH_LONG).show()
-                }
+                this.dialog(view)
             }
             else{
                 id_res?.let { favouriteRestaurantViewModel.deleteFavouriteRestaurant(
                         FavouriteRestaurantData(
-                                it, 1, img_url!!, name!!, phone!!, city!!, area!!, state!!
+                                it, id_user, img_url!!, name!!, phone!!, city!!, area!!, state!!
                         )
                 ) }
                 Toast.makeText(requireContext(), "Not favourite!", Toast.LENGTH_LONG).show()

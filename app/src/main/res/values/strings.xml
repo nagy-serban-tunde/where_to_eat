@@ -20,4 +20,6 @@
     <string name="button_update_profile"> UPDATE </string>
     <string name="title_update_profile"> Update profile </string>
     <string name="title_dialog">Who are you?</string>
+    <string name="next">NEXT</string>
+    <string name="pevious">PREVIOUS</string>>
 </resources>

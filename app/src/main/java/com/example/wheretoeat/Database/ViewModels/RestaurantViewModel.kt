@@ -18,12 +18,6 @@ class RestaurantViewModel : ViewModel() {
 
     var restList: MutableLiveData<List<RestaurantData>> = MutableLiveData()
 
-//    val getRestaurants: MutableLiveData<List<RestaurantData>>
-//        get() {
-//                loadRestaurant()
-//
-//            }
-//        }
     fun <RestaurantData> concatenate(vararg lists: List<RestaurantData>): List<RestaurantData> {
         return listOf(*lists).flatten()
     }
@@ -38,14 +32,15 @@ class RestaurantViewModel : ViewModel() {
             override fun onResponse(call: Call<RespData>, response: Response<RespData>) {
                 if(response.isSuccessful &&  response.body() != null)
                 {
-                    Log.d("resp", response.body().toString())
+//                    Log.d("resp", response.body().toString())
                     restList.postValue(concatenate(restList.value ?: listOf(),response.body()!!.restaurants))
                     setData(response.body()!!.restaurants)
+                    Log.d("resp","${SplashFragment.num_current_page}")
+                    SplashFragment.num_current_page++
                 }
             }
             override fun onFailure(call: Call<RespData>, t: Throwable) {}
         })
-        SplashFragment.num_current_page++
     }
     fun loadNewRestaurant() {
         val retrofit = Retrofit.Builder()
