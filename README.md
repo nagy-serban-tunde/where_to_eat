@@ -1,6 +1,6 @@
 # Where to eat
 
-Az alkalmazás, egy éttermek adatainak feldolgozását valósítja meg. Az éttermekről való információkat eredetileg https://opentable.herokuapp.com kapta volna az alkalmazás, de sajnos ez nem volt megoldható így lett egy másik API. A jelenlegi api a következő: https://ratpark-api.imok.space.
+Az alkalmazás, éttermek adatainak feldolgozását valósítja meg. Az éttermekről való információkat eredetileg https://opentable.herokuapp.com kapta volna az alkalmazás, de sajnos ez nem volt megoldható így lett egy másik API. A jelenlegi api a következő: https://ratpark-api.imok.space.
 
 Az alkalmazásomnak három fő oldala van: főoldal, profil hozzáadása és profilok listázása.
 
