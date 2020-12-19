@@ -32,10 +32,8 @@ class RestaurantViewModel : ViewModel() {
             override fun onResponse(call: Call<RespData>, response: Response<RespData>) {
                 if(response.isSuccessful &&  response.body() != null)
                 {
-//                    Log.d("resp", response.body().toString())
                     restList.postValue(concatenate(restList.value ?: listOf(),response.body()!!.restaurants))
                     setData(response.body()!!.restaurants)
-                    Log.d("resp","${SplashFragment.num_current_page}")
                     SplashFragment.num_current_page++
                 }
             }
@@ -53,14 +51,13 @@ class RestaurantViewModel : ViewModel() {
             override fun onResponse(call: Call<RespData>, response: Response<RespData>) {
                 if(response.isSuccessful &&  response.body() != null)
                 {
-                    Log.d("resp", response.body().toString())
                     restList.postValue(response.body()!!.restaurants)
                     setData(response.body()!!.restaurants)
+                    SplashFragment.num_current_page++
                 }
             }
             override fun onFailure(call: Call<RespData>, t: Throwable) {}
         })
-        SplashFragment.num_current_page++
     }
     fun setData(restaList: List<RestaurantData>)
     {
@@ -74,6 +71,5 @@ class RestaurantViewModel : ViewModel() {
             l = l + restaList
             SplashFragment.restaurantDataMemory.put("res", l)
         }
-        SplashFragment.num_current_page++
     }
 }

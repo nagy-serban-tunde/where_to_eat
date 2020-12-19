@@ -1,6 +1,5 @@
 package com.example.wheretoeat.Database.ViewModels
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.wheretoeat.Database.Entities.CountriesData
@@ -34,7 +33,6 @@ class CountriesViewModel : ViewModel()
             override fun onResponse(call: Call<RespDataCountries>, response: Response<RespDataCountries>) {
                 if(response.isSuccessful &&  response.body() != null)
                 {
-                    Log.d("resp", response.body().toString())
                     setData(response.body()!!.countries)
                 }
             }

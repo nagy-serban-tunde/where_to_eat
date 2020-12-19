@@ -2,7 +2,6 @@ package com.example.wheretoeat.Database.ViewModels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.wheretoeat.Database.Entities.ProfileData
 import com.example.wheretoeat.Database.Repository.ProfileRepository

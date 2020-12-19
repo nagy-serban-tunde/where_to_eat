@@ -11,7 +11,6 @@ import android.widget.*
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.example.wheretoeat.Database.Entities.FavouriteRestaurantData
 import com.example.wheretoeat.Database.Entities.RestaurantPicturesData
 import com.example.wheretoeat.Database.ViewModels.FavouriteRestaurantViewModel

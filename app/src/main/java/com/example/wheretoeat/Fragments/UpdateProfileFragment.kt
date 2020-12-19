@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -103,7 +102,6 @@ class UpdateProfileFragment : Fragment() {
     {
         name = editTextNameProfileUpdate.text.toString()
         phone = editTextPhoneProfileUpdate.text.toString()
-        Log.i("resp","${phone!!.length}")
         address = editTextAddressProfileUpdate.text.toString()
         email = editTextEmailProfileUpdate.text.toString()
         if( !this::img_url.isInitialized || !this.inputCheckText(this.name!!, this.phone!!, this.address!!, this.img_url!!, this.email!!)

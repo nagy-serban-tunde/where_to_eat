@@ -2,7 +2,6 @@ package com.example.wheretoeat.Database.Dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.wheretoeat.Database.Entities.FavouriteRestaurantData
 import com.example.wheretoeat.Database.Entities.RestaurantPicturesData
 
 @Dao
