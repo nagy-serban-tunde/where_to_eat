@@ -9,6 +9,7 @@ Az alkalmazásomnak három fő oldala van: főoldal, profil hozzáadása és pro
 A főoldalon első sorban megjelenik, egy kereső ahol a felhasználók kitudják választani a számukra megfelelő országot. Amiután ezt megtették listázódik az adott ország éttermeinek listája. Alapértelmezettként az US van beállítva.
 Ha rálépünk az egyik étteremre a listából akkor előjön az étteremről több információ is. Ezen az oldalon megtudunk nézni az éttermekről több képet, ha van. Tudunk hozzáadni képet. Tudjuk a kedvenceinkhez tenni az éttermet. Itt tudni kell, hogy mielőtt bekerülne az adatbázisba mint kedvenc étterem ki kell választani a felhasználót, hogy melyik felhasználó számára tegyük be. Ez azért van, mert nincs regisztrációs platform viszont én úgy írtam meg az alkalmazást, hogy több felhasználóra gondoltam. Ha netán meggondolnánk magunkat ki is tudjuk venni ezen az oldalon a kedvenceink közül. Ezen kívül láthatunk több információt az étteremről és nem utolsó sorban vissza tudunk lépni a fő oldalra is.
 (kepek/splash.jpeg "Splash")
+![Alt text](/kepek/splash.jpg?raw=true "Splash")
  
 # Profil hozzáadása
 
